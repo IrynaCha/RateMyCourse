@@ -45,7 +45,7 @@ public class Controller {
     }
     
     @RequestMapping("/getComments")
-    public List<Comment> getComments(@RequestParam(value="cid") Integer cid){
+    public List<Comment> getComments(@RequestParam(value="cid", required=true) Integer cid){
     	
     	return Application.commentDAO.select(cid);
     }

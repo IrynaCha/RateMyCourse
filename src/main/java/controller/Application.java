@@ -2,7 +2,6 @@ package controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import backend.CommentDAO;
@@ -22,13 +21,14 @@ public class Application {
 		
 		SpringApplication.run(Application.class, args);
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml")){
 
-		universityDAO = (UniversityDAO) context.getBean("universityDAO");
-		departmentDAO = (DepartmentDAO) context.getBean("departmentDAO");
-		courseDAO = (CourseDAO) context.getBean("courseDAO");
-		commentDAO = (CommentDAO) context.getBean("commentDAO");
-
+			universityDAO = (UniversityDAO) context.getBean("universityDAO");
+			departmentDAO = (DepartmentDAO) context.getBean("departmentDAO");
+			courseDAO = (CourseDAO) context.getBean("courseDAO");
+			commentDAO = (CommentDAO) context.getBean("commentDAO");
+		}
+		
 		/*
 		University rutgers = universityDAO.select(5666);
 		System.out.println(rutgers);
