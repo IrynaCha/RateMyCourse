@@ -26,22 +26,22 @@ public class Controller {
         return Application.universityDAO.select(state);
     }
     
-    @RequestMapping("/getUniversity")
-    public University getUniversity(@RequestParam(value="uid", required=true) Integer uid){
-    	
-    	return Application.universityDAO.select(uid);
-    }
-    
     @RequestMapping("/getDepartments")
     public List<Department> getDepartments(){
     	
     	return Application.departmentDAO.select();
     }
     
-    @RequestMapping("/getCourse")
-    public Course getCourse(@RequestParam(value="cid") Integer cid){
+    @RequestMapping("/getCoursesByUniv")
+    public List<Course> getCoursesByUniv(@RequestParam(value="uid", required=true) Integer uid){
     	
-    	return Application.courseDAO.select(cid);
+    	return Application.courseDAO.select(uid);
+    }
+    
+    @RequestMapping("/getCoursesByUnivAndDept")
+    public List<Course> getCoursesByUnivAndDept(@RequestParam(value="uid", required=true) Integer uid, @RequestParam(value="dname", required=true) String dname){
+    	
+    	return Application.courseDAO.select(uid, dname);
     }
     
     @RequestMapping("/getComments")

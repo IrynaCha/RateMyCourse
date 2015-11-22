@@ -91,39 +91,4 @@ public class JdbcUniversityDAO implements UniversityDAO{
 			}
 		}
 	}
-
-	public University select(Integer uid){
-
-		String sql = "SELECT * FROM universities WHERE uid=?";
-		Connection conn = null;
-
-		try{
-
-			conn = dataSource.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, uid);
-			University university = null;
-			ResultSet rs = ps.executeQuery();
-
-			if(rs.next()){
-				university = new University(rs.getString("uname"), rs.getString("city"), rs.getString("state"));
-				university.setUid(rs.getInt("uid"));
-			}
-			rs.close();
-			ps.close();
-			return university;
-		} catch(SQLException e){
-
-			throw new RuntimeException(e);
-		} finally{
-
-			if(conn != null){
-				try{
-					conn.close();
-				} catch (SQLException e){
-					return null;
-				}
-			}
-		}
-	}
 }
