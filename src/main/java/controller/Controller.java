@@ -13,17 +13,29 @@ import backend.classes.University;
 
 @RestController
 public class Controller {
+	
+	@RequestMapping("/getUniversities")
+	public List<University> getUniversities(){
+		
+		return Application.universityDAO.select();
+	}
 
-    @RequestMapping("/getUniversity")
-    public University getUniversity(@RequestParam(value="name") String name, @RequestParam(value="city") String city){
+    @RequestMapping("/getUniversitiesByState")
+    public List<University> getUniversitiesByState(@RequestParam(value="state", required=true) String state){
     	
-        return Application.universityDAO.select(name, city);
+        return Application.universityDAO.select(state);
     }
     
-    @RequestMapping("/getDepartment")
-    public Department getDepartment(@RequestParam(value="name") String name){
+    @RequestMapping("/getUniversity")
+    public University getUniversity(@RequestParam(value="uid", required=true) Integer uid){
     	
-    	return Application.departmentDAO.select(name);
+    	return Application.universityDAO.select(uid);
+    }
+    
+    @RequestMapping("/getDepartments")
+    public List<Department> getDepartments(){
+    	
+    	return Application.departmentDAO.select();
     }
     
     @RequestMapping("/getCourse")

@@ -1,8 +1,10 @@
 package backend;
 
+import java.util.List;
+
 import backend.classes.Department;
 
 public interface DepartmentDAO {
 
-	public Department select(String name);
+	public List<Department> select();
 }

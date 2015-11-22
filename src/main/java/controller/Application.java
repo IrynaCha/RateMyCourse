@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.List;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -11,10 +9,6 @@ import backend.CommentDAO;
 import backend.CourseDAO;
 import backend.DepartmentDAO;
 import backend.UniversityDAO;
-import backend.classes.Comment;
-import backend.classes.Course;
-import backend.classes.Department;
-import backend.classes.University;
 
 @SpringBootApplication
 public class Application {
@@ -35,6 +29,7 @@ public class Application {
 		courseDAO = (CourseDAO) context.getBean("courseDAO");
 		commentDAO = (CommentDAO) context.getBean("commentDAO");
 
+		/*
 		University rutgers = universityDAO.select(5666);
 		System.out.println(rutgers);
 		
@@ -48,5 +43,6 @@ public class Application {
 		for(Comment c : comments){
 			System.out.println(c);
 		}
+		*/
 	}
 }

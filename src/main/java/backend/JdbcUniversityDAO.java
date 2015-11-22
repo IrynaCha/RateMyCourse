@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -16,28 +18,65 @@ public class JdbcUniversityDAO implements UniversityDAO{
 	public void setDataSource(DataSource dataSource){
 		this.dataSource = dataSource;
 	}
-
-	public University select(String name, String city){
-
-		String sql = "SELECT * FROM universities WHERE uname=? AND city=?";
+	
+	public List<University> select(){
+		
+		String sql = "SELECT * FROM universities";
 		Connection conn = null;
+		List<University> universities = new ArrayList<University>();
 
 		try{
 
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, name);
-			ps.setString(2, city);
-			University university = null;
 			ResultSet rs = ps.executeQuery();
 
-			if(rs.next()){
+			while(rs.next()){
+				University university = null;
 				university = new University(rs.getString("uname"), rs.getString("city"), rs.getString("state"));
 				university.setUid(rs.getInt("uid"));
+				universities.add(university);
 			}
 			rs.close();
 			ps.close();
-			return university;
+			return universities;
+		} catch(SQLException e){
+
+			throw new RuntimeException(e);
+		} finally{
+
+			if(conn != null){
+				try{
+					conn.close();
+				} catch (SQLException e){
+					return null;
+				}
+			}
+		}
+	}
+	
+	public List<University> select(String state){
+		
+		String sql = "SELECT * FROM universities WHERE state=?";
+		Connection conn = null;
+		List<University> universities = new ArrayList<University>();
+
+		try{
+
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, state);
+			ResultSet rs = ps.executeQuery();
+
+			while(rs.next()){
+				University university = null;
+				university = new University(rs.getString("uname"), rs.getString("city"), rs.getString("state"));
+				university.setUid(rs.getInt("uid"));
+				universities.add(university);
+			}
+			rs.close();
+			ps.close();
+			return universities;
 		} catch(SQLException e){
 
 			throw new RuntimeException(e);

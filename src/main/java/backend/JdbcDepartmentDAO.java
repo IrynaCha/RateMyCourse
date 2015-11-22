@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -17,25 +19,25 @@ public class JdbcDepartmentDAO implements DepartmentDAO{
 		this.dataSource = dataSource;
 	}
 
-	public Department select(String name){
+	public List<Department> select(){
 
-		String sql = "SELECT * FROM departments WHERE dname=?";
+		String sql = "SELECT * FROM departments";
 		Connection conn = null;
+		List<Department> departments = new ArrayList<Department>();
 
 		try{
 
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, name);
-			Department department = null;
 			ResultSet rs = ps.executeQuery();
 
-			if(rs.next()){
-				department = new Department(rs.getString("dname"));
+			while(rs.next()){
+				Department department = new Department(rs.getString("dname"));
+				departments.add(department);
 			}
 			rs.close();
 			ps.close();
-			return department;
+			return departments;
 		} catch(SQLException e){
 
 			throw new RuntimeException(e);
