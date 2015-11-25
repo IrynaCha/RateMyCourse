@@ -28,21 +28,5 @@ public class Application {
 			courseDAO = (CourseDAO) context.getBean("courseDAO");
 			commentDAO = (CommentDAO) context.getBean("commentDAO");
 		}
-		
-		/*
-		University rutgers = universityDAO.select(5666);
-		System.out.println(rutgers);
-		
-		Department compSci = departmentDAO.select("Computer Science");
-		System.out.println(compSci);
-		
-		Course cs111 = courseDAO.select(3);
-		System.out.println(cs111);
-		
-		List<Comment> comments = commentDAO.select(3);
-		for(Comment c : comments){
-			System.out.println(c);
-		}
-		*/
 	}
 }

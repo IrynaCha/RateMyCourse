@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.Backend;
 import backend.classes.Comment;
 import backend.classes.Course;
 import backend.classes.Department;
+import backend.classes.Professor;
 import backend.classes.University;
 
 @RestController
@@ -48,5 +50,26 @@ public class Controller {
     public List<Comment> getComments(@RequestParam(value="cid", required=true) Integer cid){
     	
     	return Application.commentDAO.select(cid);
+    }
+    
+    @RequestMapping("/getProfComments")
+    public List<Comment> getProfComments(@RequestParam(value="cid", required=true) Integer cid, @RequestParam(value="prof", required=true) String prof){
+    	
+    	List<Comment> comments = Application.commentDAO.select(cid);
+    	return Backend.filterComments(comments, prof);
+    }
+    
+    @RequestMapping("/getTopProfs")
+    public List<Professor> getTopProfs(@RequestParam(value="cid", required=true) Integer cid){
+    	
+    	List<Comment> comments = Application.commentDAO.select(cid);
+    	return Backend.topProfs(comments, true);
+    }
+    
+    @RequestMapping("/getHotProfs")
+    public List<Professor> getHotProfs(@RequestParam(value="cid", required=true) Integer cid){
+    	
+    	List<Comment> comments = Application.commentDAO.select(cid);
+    	return Backend.topProfs(comments, false);
     }
 }
