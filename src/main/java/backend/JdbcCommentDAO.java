@@ -13,10 +13,10 @@ import backend.classes.Comment;
 
 public class JdbcCommentDAO implements CommentDAO{
 
-	private DataSource dataSource;
+	private static DataSource dataSource;
 
 	public void setDataSource(DataSource dataSource){
-		this.dataSource = dataSource;
+		JdbcCommentDAO.dataSource = dataSource;
 	}
 
 	public void insert(Comment comment) {
@@ -52,8 +52,13 @@ public class JdbcCommentDAO implements CommentDAO{
 			}
 		}
 	}
+	
+	public List<Comment> select(Integer cid){
+		
+		return selectStatic(cid);
+	}
 
-	public List<Comment> select(Integer cid) {
+	static List<Comment> selectStatic(Integer cid) {
 
 		String sql = "SELECT * FROM comments WHERE cid=?";
 		Connection conn = null;

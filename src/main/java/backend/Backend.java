@@ -3,9 +3,14 @@ package backend;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 import backend.classes.Comment;
+import backend.classes.Course;
 import backend.classes.Professor;
 
 public class Backend {
@@ -53,5 +58,38 @@ public class Backend {
 		}
 		
 		return topProfs;
+	}
+	
+	public static Map<String, Double> topCourses(List<Course> courses){
+		
+		Map<String, Double> courseRatings = new HashMap<String, Double>();
+		for(Course c : courses){
+			
+			List<Comment> comments = JdbcCommentDAO.selectStatic(c.getCid());
+			double avgRating = 0;
+			for(Comment cc : comments){
+				avgRating += cc.getRating();
+			}
+			avgRating /= comments.size();
+			if(comments.size() == 0){
+				avgRating = 0;
+			}
+			
+			courseRatings.put(c.getName(), avgRating);
+		}
+		
+		courseRatings = sortByValue(courseRatings);        
+		return courseRatings;
+	}
+	
+	private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map){
+		
+		Map<K,V> result = new LinkedHashMap<>();
+		Stream<Entry<K,V>> st = map.entrySet().stream();
+
+		st.sorted(Map.Entry.<K, V>comparingByValue().reversed())
+			.forEachOrdered(e -> result.put(e.getKey(), e.getValue()));
+		
+		return result;
 	}
 }

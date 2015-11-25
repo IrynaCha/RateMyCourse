@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,5 +72,19 @@ public class Controller {
     	
     	List<Comment> comments = Application.commentDAO.select(cid);
     	return Backend.topProfs(comments, false);
+    }
+    
+    @RequestMapping("/getTopCoursesInDept")
+    public Map<String, Double> getTopCoursesInDept(@RequestParam(value="uid", required=true) Integer uid, @RequestParam(value="dname", required=true) String dname){
+    	
+    	List<Course> courses = Application.courseDAO.select(uid, dname);
+    	return Backend.topCourses(courses);
+    }
+    
+    @RequestMapping("/getTopCoursesInUniv")
+    public Map<String, Double> getTopCoursesInDept(@RequestParam(value="uid", required=true) Integer uid){
+    	
+    	List<Course> courses = Application.courseDAO.select(uid);
+    	return Backend.topCourses(courses);
     }
 }
