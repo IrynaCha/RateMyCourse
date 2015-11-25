@@ -21,7 +21,7 @@ public class JdbcCourseDAO implements CourseDAO{
 
 	public void insert(Course course) {
 
-		String sql = "INSERT INTO courses (dname, uid, name, num) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO courses (dname, uid, name, num) VALUES (?, ?, ?, ?)";
 		Connection conn = null;
 
 		try{
