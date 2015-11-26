@@ -3,7 +3,11 @@ package controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -86,5 +90,53 @@ public class Controller {
     	
     	List<Course> courses = Application.courseDAO.select(uid);
     	return Backend.topCourses(courses);
+    }
+    
+    @RequestMapping(value="/addCourse", method=RequestMethod.POST)
+    public ResponseEntity<Course> addCourse(@RequestBody Map<String, Object> json){
+    	
+    	if(json != null){
+    		
+    		try{
+    			
+	    		String name = (String) json.get("name");
+	    		String num = (String) json.get("num");
+	    		Integer uid = (Integer) json.get("uid");
+	    		String dname = (String) json.get("dname");
+	    		Course course = new Course(name, num, uid, dname);
+	    		Application.courseDAO.insert(course);
+	    		return new ResponseEntity<Course>(course, HttpStatus.OK);
+	    		
+    		} catch (Exception e){
+    			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    		}
+    	}
+    	return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value="/addComment", method=RequestMethod.POST)
+    public ResponseEntity<Comment> addComment(@RequestBody Map<String, Object> json){
+    	
+    	if(json != null){
+    		
+    		try{
+    			
+	    		Integer cid = (Integer) json.get("cid");
+	    		Double rating = (Double) json.get("rating");
+	    		String commentString = (String) json.get("comment");
+	    		String prof = (String) json.get("prof");
+	    		Integer texts = (Integer) json.get("texts");
+	    		Integer hotness = (Integer) json.get("hotness");
+	    		String grade = (String) json.get("grade");
+	    		String sleep = (String) json.get("sleep");
+	    		Comment comment = new Comment(cid, rating, commentString, prof, texts, hotness, grade, sleep);
+	    		Application.commentDAO.insert(comment);
+	    		return new ResponseEntity<Comment>(comment, HttpStatus.OK);
+	    		
+    		} catch (Exception e){
+    			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    		}
+    	}
+    	return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 }
