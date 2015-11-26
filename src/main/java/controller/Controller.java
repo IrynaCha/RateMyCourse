@@ -117,10 +117,10 @@ public class Controller {
 	    		return new ResponseEntity<Course>(course, HttpStatus.OK);
 	    		
     		} catch (Exception e){
-    			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    			return new ResponseEntity<Course>(HttpStatus.BAD_REQUEST);
     		}
     	}
-    	return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    	return new ResponseEntity<Course>(HttpStatus.BAD_REQUEST);
     }
     
     @RequestMapping(value="/addComment", method=RequestMethod.POST)
@@ -143,9 +143,9 @@ public class Controller {
 	    		return new ResponseEntity<Comment>(comment, HttpStatus.OK);
 	    		
     		} catch (Exception e){
-    			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    			return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
     		}
     	}
-    	return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    	return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
     }
 }
