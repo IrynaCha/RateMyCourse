@@ -7,12 +7,12 @@ public class Comment {
 	private String comment;
 	private String prof;
 	private Integer texts;
-	private Integer hotness;
+	private Double hotness;
 	private String grade;
 	private String sleep;
 	
 	public Comment(Integer cid, Double rating, String comment, String prof,
-					Integer texts, Integer hotness, String grade, String sleep){
+					Integer texts, Double hotness, String grade, String sleep){
 		
 		this.cid = cid;
 		this.rating = rating;
@@ -48,7 +48,7 @@ public class Comment {
 		return texts;
 	}
 
-	public Integer getHotness() {
+	public Double getHotness() {
 		return hotness;
 	}
 

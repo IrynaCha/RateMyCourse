@@ -1,7 +1,6 @@
 package backend;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,36 +27,52 @@ public class Backend {
 		return filteredComments;
 	}
 	
-	public static List<Professor> topProfs(List<Comment> comments, boolean byRating){
+	public static List<Professor> profStats(List<Comment> comments){
 		
-		HashMap<String, Professor> profs = new HashMap<String, Professor>();
+		HashMap<String, Professor> profsMap = new HashMap<String, Professor>();
 		for(Comment c : comments){
 			
-			if(profs.containsKey(c.getProf())){
-				profs.get(c.getProf()).incrementComments();
-				profs.get(c.getProf()).addRatings(c.getRating());
-				profs.get(c.getProf()).addHotness(c.getHotness());
+			if(profsMap.containsKey(c.getProf())){
+				profsMap.get(c.getProf()).incrementComments();
+				profsMap.get(c.getProf()).addRatings(c.getRating());
+				profsMap.get(c.getProf()).addHotness(c.getHotness());
+				profsMap.get(c.getProf()).addTexts(c.getTexts());
+				profsMap.get(c.getProf()).addGrade(c.getGrade());
+				profsMap.get(c.getProf()).addSleep(c.getSleep());
 			}
 			else{
 				Professor p = new Professor(c.getProf());
 				p.incrementComments();
 				p.addRatings(c.getRating());
 				p.addHotness(c.getHotness());
-				profs.put(p.getName(), p);
+				p.addTexts(c.getTexts());
+				p.addGrade(c.getGrade());
+				p.addSleep(c.getSleep());
+				profsMap.put(p.getName(), p);
 			}
 		}
-		List<Professor> topProfs = new ArrayList<Professor>();
-		for(Professor p : profs.values()){
-			topProfs.add(p);
-		}
+		
+		List<Professor> profs = new ArrayList<Professor>();
+		profs.addAll(profsMap.values());
+		return profs;
+	}
+	
+	public static Map<String, Double> topProfs(List<Professor> profs, boolean byRating){
+		
+		Map<String, Double> profStats = new HashMap<String, Double>();
 		if(byRating){
-			Collections.sort(topProfs, Professor.compareByRatings);
+			for(Professor p : profs){
+				profStats.put(p.getName(), p.getAvgRating());
+			}
 		}
 		else{
-			Collections.sort(topProfs, Professor.compareByHoteness);
+			for(Professor p : profs){
+				profStats.put(p.getName(), p.getAvgHotness());
+			}
 		}
 		
-		return topProfs;
+		profStats = sortByValue(profStats);
+		return profStats;
 	}
 	
 	public static Map<String, Double> topCourses(List<Course> courses){

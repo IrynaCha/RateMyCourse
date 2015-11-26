@@ -32,7 +32,7 @@ public class JdbcCommentDAO implements CommentDAO{
 			ps.setString(2, comment.getComment());
 			ps.setString(3, comment.getProf());
 			ps.setInt(4, comment.getTexts());
-			ps.setInt(5, comment.getHotness());
+			ps.setDouble(5, comment.getHotness());
 			ps.setString(6, comment.getGrade());
 			ps.setString(7, comment.getSleep());
 			ps.executeUpdate();
@@ -72,7 +72,7 @@ public class JdbcCommentDAO implements CommentDAO{
 
 			while(rs.next()){
 				Comment c = new Comment(rs.getInt("cid"), rs.getDouble("rating"), rs.getString("comment"), rs.getString("prof"),
-										rs.getInt("texts"), rs.getInt("hotness"), rs.getString("grade"), rs.getString("sleep"));
+										rs.getInt("texts"), rs.getDouble("hotness"), rs.getString("grade"), rs.getString("sleep"));
 				comments.add(c);
 			}
 			rs.close();

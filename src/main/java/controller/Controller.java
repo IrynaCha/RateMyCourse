@@ -64,18 +64,27 @@ public class Controller {
     	return Backend.filterComments(comments, prof);
     }
     
-    @RequestMapping("/getTopProfs")
-    public List<Professor> getTopProfs(@RequestParam(value="cid", required=true) Integer cid){
+    @RequestMapping("/getProfStats")
+    public List<Professor> getProfStats(@RequestParam(value="cid", required=true) Integer cid){
     	
     	List<Comment> comments = Application.commentDAO.select(cid);
-    	return Backend.topProfs(comments, true);
+    	return Backend.profStats(comments);
+    }
+    
+    @RequestMapping("/getTopProfs")
+    public Map<String, Double> getTopProfs(@RequestParam(value="cid", required=true) Integer cid){
+    	
+    	List<Comment> comments = Application.commentDAO.select(cid);
+    	List<Professor> profs = Backend.profStats(comments);
+    	return Backend.topProfs(profs, true);
     }
     
     @RequestMapping("/getHotProfs")
-    public List<Professor> getHotProfs(@RequestParam(value="cid", required=true) Integer cid){
+    public Map<String, Double> getHotProfs(@RequestParam(value="cid", required=true) Integer cid){
     	
     	List<Comment> comments = Application.commentDAO.select(cid);
-    	return Backend.topProfs(comments, false);
+    	List<Professor> profs = Backend.profStats(comments);
+    	return Backend.topProfs(profs, false);
     }
     
     @RequestMapping("/getTopCoursesInDept")
@@ -126,7 +135,7 @@ public class Controller {
 	    		String commentString = (String) json.get("comment");
 	    		String prof = (String) json.get("prof");
 	    		Integer texts = (Integer) json.get("texts");
-	    		Integer hotness = (Integer) json.get("hotness");
+	    		Double hotness = (Double) json.get("hotness");
 	    		String grade = (String) json.get("grade");
 	    		String sleep = (String) json.get("sleep");
 	    		Comment comment = new Comment(cid, rating, commentString, prof, texts, hotness, grade, sleep);
