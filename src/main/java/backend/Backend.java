@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 import backend.classes.Comment;
 import backend.classes.Course;
 import backend.classes.Professor;
+import backend.classes.University;
+import controller.Application;
 
 public class Backend {
 	
@@ -95,6 +97,34 @@ public class Backend {
 		
 		courseRatings = sortByValue(courseRatings);        
 		return courseRatings;
+	}
+	
+	public static Map<String, Double> topUniversities(List<University> universities){
+		
+		Map<String, Double> topUniversities = new HashMap<String, Double>();
+		for(University u : universities){
+			
+			List<Course> courses = Application.courseDAO.select(u.getUid());
+			if(courses.isEmpty()){
+				continue;
+			}
+			
+			Map<String, Double> courseRatings = topCourses(courses);
+			double avg = 0;
+			int numCourses = 0;
+			for(Double d : courseRatings.values()){
+				if(d == 0){
+					continue;
+				}
+				avg += d;
+				numCourses++;
+			}
+			avg /= numCourses;
+			topUniversities.put(u.getName(), avg);
+		}
+		
+		topUniversities = sortByValue(topUniversities);		
+		return topUniversities;
 	}
 	
 	private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map){

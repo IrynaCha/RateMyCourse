@@ -101,6 +101,13 @@ public class Controller {
     	return Backend.topCourses(courses);
     }
     
+    @RequestMapping("/getTopUniversities")
+    public Map<String, Double> getTopUniversities(){
+    	
+    	List<University> universities = Application.universityDAO.select();
+    	return Backend.topUniversities(universities);
+    }
+    
     @RequestMapping(value="/addCourse", method=RequestMethod.POST)
     public ResponseEntity<Course> addCourse(@RequestBody Map<String, Object> json){
     	
