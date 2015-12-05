@@ -21,20 +21,21 @@ public class JdbcCommentDAO implements CommentDAO{
 
 	public void insert(Comment comment) {
 
-		String sql = "INSERT INTO comments (rating, comment, prof, texts, hotness, grade, sleep) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO comments (cid, rating, comment, prof, texts, hotness, grade, sleep) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try{
 
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setDouble(1, comment.getRating());
-			ps.setString(2, comment.getComment());
-			ps.setString(3, comment.getProf());
-			ps.setInt(4, comment.getTexts());
-			ps.setDouble(5, comment.getHotness());
-			ps.setString(6, comment.getGrade());
-			ps.setString(7, comment.getSleep());
+			ps.setInt(1, comment.getCid());
+			ps.setDouble(2, comment.getRating());
+			ps.setString(3, comment.getComment());
+			ps.setString(4, comment.getProf());
+			ps.setInt(5, comment.getTexts());
+			ps.setDouble(6, comment.getHotness());
+			ps.setString(7, comment.getGrade());
+			ps.setString(8, comment.getSleep());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e){
