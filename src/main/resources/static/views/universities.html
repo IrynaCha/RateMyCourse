@@ -1,0 +1,31 @@
+<md-card style="width: 80%; margin:auto">
+    <md-card-title class="card-headinguniv">
+        <md-card-title-text>
+            <span class="md-headline">University Ranking</span>
+
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+        <table class="toptable mdl-data-table mdl-js-data-table mdl-data-table--selectable " style="background-color:white">
+            <thead>
+
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">College</th>
+                    <th>Average Rating</th>
+
+                </tr>
+
+
+            </thead>
+            <tbody>
+                <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                <tr ng-repeat="univ in topunivs | orderBy: '-rank'">
+
+                    <td class="mdl-data-table__cell--non-numeric">{{univ.name}}</td>
+                    <td class="">{{univ.rank | number:2 }}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </md-card-content>
+</md-card>

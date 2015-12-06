@@ -1,0 +1,180 @@
+<div layout="row">
+    <div flex="33">
+        <div layout="column">
+            <md-card>
+
+
+                <md-card-title class="card-heading">
+                    <md-card-title-text>
+                        <span class="md-headline">Top Professors</span>
+
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <table class="toptable mdl-data-table mdl-js-data-table mdl-data-table--selectable ">
+                        <thead>
+                            <tr>
+                                <th class="mdl-data-table__cell--non-numeric">Professor</th>
+                                <th class="mdl-data-table__cell--non-numeric">Rating</th>
+
+                            </tr>
+
+
+                        </thead>
+                        <tbody>
+
+                            <tr ng-repeat="prof in topprofs | orderBy: '-rank' | limitTo : 5">
+                                <td class="mdl-data-table__cell--non-numeric">{{ prof.name}}</td>
+                                <td class="mdl-data-table__cell--non-numeric">{{ prof.rank | number:2}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+
+            <md-card>
+                <md-card-title class="card-heading">
+                    <md-card-title-text>
+                        <span class="md-headline">Hottest Professors</span>
+
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <table class="toptable mdl-data-table mdl-js-data-table mdl-data-table--selectable ">
+                        <thead>
+                            <tr>
+                                <th class="mdl-data-table__cell--non-numeric">Professor</th>
+                                <th class="mdl-data-table__cell--non-numeric">Hotness</th>
+
+                            </tr>
+
+
+                        </thead>
+                        <tbody>
+
+                            <tr ng-repeat="prof in hotprofs | orderBy: '-rank' | limitTo : 5">
+                                <td class="mdl-data-table__cell--non-numeric">{{ prof.name}}</td>
+                                <td class="mdl-data-table__cell--non-numeric">{{ prof.rank | number:2}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+
+
+
+            <md-card>
+
+
+                <md-card-title class="card-heading">
+                    <md-card-title-text>
+                        <span class="md-headline">Details</span>
+
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <table class="toptable mdl-data-table mdl-js-data-table mdl-data-table--selectable ">
+                        <thead>
+                            <tr>
+                                <th class="mdl-data-table__cell--non-numeric">Professor</th>
+                                <th class="mdl-data-table__cell--non-numeric">Grade</th>
+                                <th class="mdl-data-table__cell--non-numeric">Texts(#)</th>
+                                <th class="mdl-data-table__cell--non-numeric">Sleep(%)</th>
+
+                            </tr>
+
+
+                        </thead>
+                        <tbody>
+
+                            <tr ng-repeat="prof in profstats">
+                                <td class="mdl-data-table__cell--non-numeric">{{ prof.name}}</td>
+                                <td class="mdl-data-table__cell--non-numeric">{{ prof.avgGrade}}</td>
+                                <td class="mdl-data-table__cell--non-numeric">{{ prof.avgTexts | number:2}}</td>
+                                <td class="mdl-data-table__cell--non-numeric">{{ prof.sleepPercent | number:2}} %</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+        </div>
+
+    </div>
+
+    <div flex="66">
+        <md-card>
+
+
+            <md-card-content>
+
+
+                <md-list class="reviewheader" layout="row">
+
+
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <b>College </b></br>
+                            {{ctrl.selectedUniversity}}
+
+                        </div>
+                    </md-list-item>
+
+
+
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <b>Course </b></br>
+                            {{ctrl.selectedCoursevar.name}}
+
+                        </div>
+                    </md-list-item>
+
+
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <b>Department</b> </br>
+                            {{ctrl.selectedCoursevar.dname}}
+
+                        </div>
+                    </md-list-item>
+
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <b>Course #</b></br>
+                            {{ctrl.selectedCoursevar.num}}
+                        </div>
+                    </md-list-item>
+                </md-list>
+
+                <md-card-actions layout="row">
+                    <button class="button-padding mdl-button mdl-js-button mdl-button--raised mdl-button--colored button-padding" ng-click="rateclass(ctrl.selectedCoursevar)">
+                        RATE THIS CLASS
+                    </button>
+
+                </md-card-actions>
+
+                <hr>
+
+
+
+                <md-list>
+                    <md-subheader class="md-no-sticky">Reviews</md-subheader>
+                    <md-list-item class="md-3-line" ng-repeat="comment in comments | reverse">
+                        <div class="md-list-item-text" layout="column">
+                            <h3>Professor: {{ comment.prof }}</h3>
+                            <h3>Rating: {{ comment.rating }} / 5</h3>
+                            <h3>Grade: {{ comment.grade }}</h3>
+                            <p>{{ comment.comment }}</p>
+                            <md-divider></md-divider>
+                        </div>
+                    </md-list-item>
+
+
+                </md-list>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>

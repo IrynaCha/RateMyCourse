@@ -1,0 +1,41 @@
+
+
+            
+
+                    <table class="tableformat table table-hover mdl-shadow--2dp" ng-show="ctrl.showTable" style="background-color:white">
+                        <thead>
+                            <tr>
+                                <th colspan="3">
+                                 <md-input-container class="inputboxpadding">
+   
+                                    <input type="text" ng-model="query" style="margin-bottom: 5px; margin-top: 5px; width: 100%; " placeholder="Search courses" />
+                                 </md-input-container>
+                                </th>
+                                
+                                <th colspan="1">
+                               <md-button class="md-fab md-primary fabformat" ng-click="ctrl.addCourse($event)">
+        <i class="fa fa-plus"></i>
+        </md-button>
+
+                                </th>
+                            </tr>
+                            <tr>
+                                <th >Course Number</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>College</th>
+                            </tr>
+
+
+                        </thead>
+                        <tbody>
+
+                           <tr ng-repeat="course in ctrl.courses | filter:query" ng-click="ctrl.selectedCourse(course)">
+                                <td>{{ course.num }}</td>
+                                <td>{{ course.name }}</td>
+                                <td>{{ course.dname }}</td>
+                                <td>{{ ctrl.selectedUniversity }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+               

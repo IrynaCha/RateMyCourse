@@ -1,0 +1,95 @@
+<md-dialog aria-label="Rate">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Rate</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width:900px;max-width:900px;max-height:1000px; ">
+            <form name="projectForm">
+
+                <md-input-container class="md-block">
+                    <label>Professor Name</label>
+                    <input required name="Course Name" ng-model="comment.prof">
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Comment(150 Characters or less)</label>
+                    <input md-maxlength="150" required name="Comment" ng-model="comment.comment">
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Texts sent per class</label>
+                    <input required name="Texts" ng-model="comment.texts" min="0" placeholder="101" ng-pattern="/^[0-9]+$/" md-maxlength="120" />
+                </md-input-container>
+                
+                
+	            <div layout="row">
+
+<div flex>
+ 
+               	 <label class="dropdownlabel">Rating</label>
+                    <md-select ng-model="comment.rating">
+                        <md-option>1</md-option>
+                        <md-option>2</md-option>
+                        <md-option>3</md-option>
+                        <md-option>4</md-option>
+                        <md-option>5</md-option>
+                    </md-select>
+            
+</div>
+
+  
+ <div flex>               
+                       <label class="dropdownlabel">Hotness</label>
+                    <md-select ng-model="comment.hotness">
+                        <md-option>1</md-option>
+                        <md-option>2</md-option>
+                        <md-option>3</md-option>
+                        <md-option>4</md-option>
+                        <md-option>5</md-option>
+                    </md-select>
+               
+</div>
+               
+ <div flex>               
+                 <label class="dropdownlabel">Grade Recieved</label>
+                    <md-select ng-model="comment.grade">
+                        <md-option>A</md-option>
+                        <md-option>B</md-option>
+                        <md-option>C</md-option>
+                        <md-option>D</md-option>
+                        <md-option>F</md-option>
+                    </md-select>
+             
+</div>
+	
+<div flex>			
+                 <label class="dropdownlabel">Sleep?</label>
+                    <md-select ng-model="comment.sleep">
+                        <md-option>Yes</md-option>
+                        <md-option>No</md-option>
+                    </md-select>
+          
+  </div>              
+                
+		</div> 
+                
+
+
+            </form>
+        </md-dialog-content>
+
+
+        <md-dialog-actions layout="row">
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored button-padding" ng-click="answer('useful')" style="margin-right:20px; top:-5px;">
+                <i class="fa fa-book"></i> Rate
+            </button>
+
+        </md-dialog-actions>
+
+
+    </form>
+</md-dialog>
